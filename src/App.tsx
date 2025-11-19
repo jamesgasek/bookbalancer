@@ -65,8 +65,30 @@ function App() {
     // Check for apiKey URL parameter on component mount
     const params = new URLSearchParams(window.location.search);
     const urlApiKey = params.get('apiKey');
+    const shouldAutoLoad = params.get('autoLoad') === 'true';
+    
     if (urlApiKey) {
       setApiKey(urlApiKey);
+      
+      // If autoLoad parameter is present, automatically fetch opportunities
+      if (shouldAutoLoad) {
+        // Wait a tick to ensure state is updated
+        setTimeout(async () => {
+          setLoading(true);
+          setError('');
+          setOpportunities([]);
+          
+          try {
+            const games = await fetchAllSportsOdds(urlApiKey);
+            const arbs = findArbitrage(games);
+            setOpportunities(arbs);
+          } catch (err) {
+            setError((err as Error).message);
+          } finally {
+            setLoading(false);
+          }
+        }, 0);
+      }
     }
   }, []);
 
