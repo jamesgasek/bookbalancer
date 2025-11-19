@@ -377,7 +377,7 @@ function App() {
             <div className="space-y-4">
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-green-600">
-                  🎯 {opportunities.length} Arbitrage Opportunity(ies) Found!
+                  🎯 {opportunities.length} Arbitrage {opportunities.length === 1 ? 'Opportunity' : 'Opportunities'} Found!
                 </h2>
               </div>
               
