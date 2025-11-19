@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -59,6 +59,16 @@ function App() {
   const [error, setError] = useState('');
   const [requestsRemaining, setRequestsRemaining] = useState<string>('');
   const [useAmericanOdds, setUseAmericanOdds] = useState(false);
+
+  // === URL PARAMETER HANDLING ===
+  useEffect(() => {
+    // Check for apiKey URL parameter on component mount
+    const params = new URLSearchParams(window.location.search);
+    const urlApiKey = params.get('apiKey');
+    if (urlApiKey) {
+      setApiKey(urlApiKey);
+    }
+  }, []);
 
   // === UTILITY FUNCTIONS ===
   function decimalToImpliedProb(decimal: number): number {
