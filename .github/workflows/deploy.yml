@@ -32,14 +32,12 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: './bookbalancer-app/package-lock.json'
+          cache-dependency-path: './package-lock.json'
       
       - name: Install dependencies
-        working-directory: ./bookbalancer-app
         run: npm ci
       
       - name: Build
-        working-directory: ./bookbalancer-app
         run: npm run build
         env:
           NODE_ENV: production
@@ -47,7 +45,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./bookbalancer-app/dist
+          path: ./dist
 
   deploy:
     environment:
